@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자야구게임</title>
+    <style>
+        .box{
+            width: 15px
+        }
+        .table, .table th, .table td{
+            border: 1px solid black;
+            border-collapse: collapse; /*테두리 두 겹을 없애줌*/
+        }
+        wrapper {
+            display: flex;
+        }
+        .inputside{
+            width: 300px;
+        }
+        .outputside{
+            width: 300px;
+        }
+        .counttitle{
+            width: 150px;
+        }
+        .inputtitle{
+            width: 80px;
+        }
+        p{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>숫자야구게임</h1>
+    <wrapper>  
+        <div class="inputside">
+            <p>번호를 입력하세요</p>
+            <div>
+                <input type="text" class="inputnumber box" id="box1">
+                <input type="text" class="inputnumber box" id="box2">
+                <input type="text" class="inputnumber box" id="box3">
+                <input type="text" class="inputnumber box" id="box4"> 
+                <!--선택자는 띄어쓰면 두 개 지어줄 수 있다-->
+                <input type="button" class="inputnumber" value="투구" onclick="pitch()">
+                <input type="button" value="재시작">
+            </div>
+                <div class="gameresult">투구하세요</div>
+        </div>
+
+        <div class="outputside">
+            <table class="table">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th class="inputtitle">입력값</th>
+                    <th class="counttitle">카운트</th>
+                </tr>
+                <tr><td> 1회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 2회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 3회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 4회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 5회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 6회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 7회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 8회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td> 9회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            </table>
+        </div>
+    </wrapper>
+    <script>
+        let inputnumber = document.querySelectorAll(".inputnumber");
+
+        for (let i = 0; i<inputnumber.length - 1; i++){
+            inputnumber[i].addEventListener("keyup", function(){
+                this.nextElementSibling.focus();
+            })
+        } //nextElementSibling 속성이 대체 무엇인지 모르겠지만.. 동작은 한다.
+        /*
+        nextSibling, nextElementSibling 모두 같은 노드 레벨의 다음 값을 가져옵니다. 
+
+        둘의 차이는 
+         
+        nextSibling은 공백이든, 텍스트든 가리지 않고 다음에 있는 것을 가져오게 되고,
+        nextElementSibling 은 Element(요소)만 가져오게 됩니다. 
+        출처: https://aljjabaegi.tistory.com/548 [알짜배기 프로그래머:티스토리]
+
+        다음 html 요소로 넘어가게 하는 메소드로 생각하면 될 듯
+
+        네번째칸까지 숫자를 입력하면 투구칸으로 포커스를 주면 되겠다
+        */
+        
+        let questNumberSet = [];
+
+        function setQuest(){
+            let questNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+            //0~9까지 숫자를 랜덤한 인덱스로 하나씩 빼 쓰면 되지 않나
+            for (i=1; i<5; i++){
+                let randomIndex = Math.floor(Math.random() * questNumber.length);
+                questNumberSet.splice(randomIndex, 1);
+            }
+            console.log(questNumberSet)
+            
+
+            /*
+            for (i=1; i<5; i++){
+                questNumberSet.push()
+            }
+            const setCollectionQuest = new Set(questNumberSet);
+            //Set 생성자 함수는 인수로 이터러블을 받습니다.
+            //중복된 값을 Set 객체에 요소로 저장되지 않으므로 배열에서 중복된 요소를 제거하는데 사용합니다.
+            const isDuplicateQuest = setCollectionQuest.size < questNumberSet.length;
+            */
+
+            if (true){
+                alert("문제 생성 실패");
+                
+            } else{
+                alert("문제 생성 완료")
+            }
+            console.log(questNumberSet);
+        }
+        
+
+        function pitch(){
+            let box1 = document.getElementById("box1").value;
+            let box2 = document.getElementById("box2").value;
+            let box3 = document.getElementById("box3").value;
+            let box4 = document.getElementById("box4").value;
+            
+            let boxarr = [box1, box2, box3, box4];
+
+            const setCollection = new Set(boxarr);
+            //Set 생성자 함수는 인수로 이터러블을 받습니다.
+            //중복된 값을 Set 객체에 요소로 저장되지 않으므로 배열에서 중복된 요소를 제거하는데 사용합니다.
+            const isDuplicate = setCollection.size < boxarr.length;
+            //true 나오면 중복 있음. false 나오면 중복 없음.
+
+            function validatie(){
+                if (isDuplicate === true){
+                    alert("중복된 숫자가 존재합니다");
+                } else {
+                    alert("문제없네요");
+                }
+            }
+
+            console.log(isDuplicate); 
+            console.log(setCollection);
+            validatie();
+
+            
+            /*
+            1. 유효성 검사
+            2. 스트라이크 볼 판정 후 표기
+            3. 9회 초과 시 안내멘트와 함께 초기화
+            */
+            //버튼 클릭하면 비동기적으로 처리되면서 지워지는 것까지 구현하면 좋겠다(?맞는말일까)
+        }
+    </script>
+</body>
+</html>
