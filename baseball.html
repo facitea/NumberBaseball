@@ -91,11 +91,11 @@
         네번째칸까지 숫자를 입력하면 투구칸으로 포커스를 주면 되겠다
         */
 
-        var questNumber = []; //문제 배열 복사
+        var questNumberSet = []; //문제 배열 복사
 
         function questMaker(){
             let questNumber = new Array(); //문제 배열
-            let zeroToNine = [0,1,2,3,4,5,6,7,8,9]; //1~10 배열
+            let zeroToNine = ["0","1","2","3","4","5","6","7","8","9"]; //1~10 배열
             while(questNumber.length < 4){
             let questNumbernum = zeroToNine.splice(Math.floor(Math.random() * zeroToNine.length),1)[0]
             questNumber.push(questNumbernum)
@@ -103,7 +103,7 @@
 
             alert(questNumber + "문제 생성 완료");
             console.log(questNumber);
-            a = questNumber;
+            questNumberSet = questNumber;
             /*let으로 생성한 숫자 네 개를 어떻게 바깥으로 뺄 지 고민해야 한다. 임시방편으로 var를 썼다.
             문제가 생겼다. 한번 함수를 실행하면 더 이상 문제가 바뀌지 않는다
             그 다음 해결방법으로 바깥에 var a 변수를 놓고 함수 내부에서 a에 questNumber를 할당했다.
@@ -156,13 +156,19 @@
         */
 
         function isSameNumber(){
-            if (a == answerNumber){
+            if (questNumberSet == answerNumber){
                 alert("정답입니다.")
             } else {
                 alert("오답입니다.")
             }
         }
-        //a의 명칭을 구체화 하고 선언부터 다시 하자. 지금 상태로는 false가 나오니 자료형변경이 필요할듯.
+        /*questNumberSet[i] === answerNumber[i]
+        1. 스트라이크 판정은 쉽다. 인덱스 값으로 비교하면 된다.
+        2. 볼 판정은 스트라이크인 것을 제외하고
+        3. 모두가 맞으면 정답이 나오게 해야한다.
+        4. 
+        
+        */
 
     </script>
 </body>
