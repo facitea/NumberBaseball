@@ -90,38 +90,29 @@
 
         네번째칸까지 숫자를 입력하면 투구칸으로 포커스를 주면 되겠다
         */
-        
-        let questNumberSet = [];
 
-        function setQuest(){
-            let questNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-            //0~9까지 숫자를 랜덤한 인덱스로 하나씩 빼 쓰면 되지 않나
-            for (i=1; i<5; i++){
-                let randomIndex = Math.floor(Math.random() * questNumber.length);
-                questNumberSet.splice(randomIndex, 1);
-            }
-            console.log(questNumberSet)
-            
+        var questNumber = []; //문제 배열 복사
 
-            /*
-            for (i=1; i<5; i++){
-                questNumberSet.push()
+        function questMaker(){
+            let questNumber = new Array(); //문제 배열
+            let zeroToNine = [0,1,2,3,4,5,6,7,8,9]; //1~10 배열
+            while(questNumber.length < 4){
+            let questNumbernum = zeroToNine.splice(Math.floor(Math.random() * zeroToNine.length),1)[0]
+            questNumber.push(questNumbernum)
             }
-            const setCollectionQuest = new Set(questNumberSet);
-            //Set 생성자 함수는 인수로 이터러블을 받습니다.
-            //중복된 값을 Set 객체에 요소로 저장되지 않으므로 배열에서 중복된 요소를 제거하는데 사용합니다.
-            const isDuplicateQuest = setCollectionQuest.size < questNumberSet.length;
+
+            alert(questNumber + "문제 생성 완료");
+            console.log(questNumber);
+            a = questNumber;
+            /*let으로 생성한 숫자 네 개를 어떻게 바깥으로 뺄 지 고민해야 한다. 임시방편으로 var를 썼다.
+            문제가 생겼다. 한번 함수를 실행하면 더 이상 문제가 바뀌지 않는다
+            그 다음 해결방법으로 바깥에 var a 변수를 놓고 함수 내부에서 a에 questNumber를 할당했다.
             */
-
-            if (true){
-                alert("문제 생성 실패");
-                
-            } else{
-                alert("문제 생성 완료")
-            }
-            console.log(questNumberSet);
         }
+
+            
         
+        var answerNumber = [];
 
         function pitch(){
             let box1 = document.getElementById("box1").value;
@@ -144,12 +135,11 @@
                     alert("문제없네요");
                 }
             }
+            answerNumber = boxarr;
 
             console.log(isDuplicate); 
             console.log(setCollection);
             validatie();
-
-            
             /*
             1. 유효성 검사
             2. 스트라이크 볼 판정 후 표기
@@ -157,6 +147,23 @@
             */
             //버튼 클릭하면 비동기적으로 처리되면서 지워지는 것까지 구현하면 좋겠다(?맞는말일까)
         }
+
+        /*이제 문제와 제출답안을 비교하는 로직을 짜야한다.
+        1. 문제와 답안 비교 후 볼판정
+        2. dom 조작하여 결과 출력
+        3. 
+        **포인트는 리스트에 어떻게 출력시킬지!
+        */
+
+        function isSameNumber(){
+            if (a == answerNumber){
+                alert("정답입니다.")
+            } else {
+                alert("오답입니다.")
+            }
+        }
+        //a의 명칭을 구체화 하고 선언부터 다시 하자. 지금 상태로는 false가 나오니 자료형변경이 필요할듯.
+
     </script>
 </body>
 </html>
