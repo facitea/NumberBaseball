@@ -45,7 +45,7 @@
                 <input type="text" class="inputnumber box" id="box4"> 
                 <!--선택자는 띄어쓰면 두 개 지어줄 수 있다-->
                 <input type="button" class="inputnumber" value="투구" onclick="pitch()">
-                <input type="button" value="재시작">
+                <input type="button" value="재시작" onclick="reStart()">
             </div>
                 <div class="gameresult">투구하세요</div>
         </div>
@@ -57,15 +57,51 @@
                     <th class="inputtitle">입력값</th>
                     <th class="counttitle">카운트</th>
                 </tr>
-                <tr><td> 1회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 2회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 3회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 4회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 5회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 6회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 7회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 8회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td> 9회 </td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr>
+                    <td> 1회 </td>
+                    <td id="round1">&nbsp;</td>
+                    <td id="round1_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 2회 </td>
+                    <td id="round2">&nbsp;</td>
+                    <td id="round2_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 3회 </td>
+                    <td id="round3">&nbsp;</td>
+                    <td id="round3_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 4회 </td>
+                    <td id="round4">&nbsp;</td>
+                    <td id="round4_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 5회 </td>
+                    <td id="round5">&nbsp;</td>
+                    <td id="round5_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 6회 </td>
+                    <td id="round6">&nbsp;</td>
+                    <td id="round6_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 7회 </td>
+                    <td id="round7">&nbsp;</td>
+                    <td id="round7_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 8회 </td>
+                    <td id="round8">&nbsp;</td>
+                    <td id="round8_val">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td> 9회 </td>
+                    <td id="round9">&nbsp;</td>
+                    <td id="round9_val">&nbsp;</td>
+                </tr>
             </table>
         </div>
     </wrapper>
@@ -102,6 +138,7 @@
             }
 
             alert(questNumber + "문제 생성 완료");
+            console.log("문제는" + questNumber + "입니다")
             console.log(questNumber);
             questNumberSet = questNumber;
             /*let으로 생성한 숫자 네 개를 어떻게 바깥으로 뺄 지 고민해야 한다. 임시방편으로 var를 썼다.
@@ -109,8 +146,61 @@
             그 다음 해결방법으로 바깥에 var a 변수를 놓고 함수 내부에서 a에 questNumber를 할당했다.
             */
         }
+        window.onload = questMaker();
 
-            
+
+
+        
+    
+            const round1 = document.getElementById("round1");
+            const round2 = document.getElementById("round2");
+            const round3 = document.getElementById("round3");
+            const round4 = document.getElementById("round4");
+            const round5 = document.getElementById("round5");
+            const round6 = document.getElementById("round6");
+            const round7 = document.getElementById("round7");
+            const round8 = document.getElementById("round8");
+            const round9 = document.getElementById("round9");
+
+            const val1 = document.getElementById("round1_val");
+            const val2 = document.getElementById("round2_val");
+            const val3 = document.getElementById("round3_val");
+            const val4 = document.getElementById("round4_val");
+            const val5 = document.getElementById("round5_val");
+            const val6 = document.getElementById("round6_val");
+            const val7 = document.getElementById("round7_val");        
+            const val8 = document.getElementById("round8_val");        
+            const val9 = document.getElementById("round9_val");   
+
+        var ballResult;
+        var strikeResult;
+
+        function strikeZone(){
+            let onlyNumber = answerNumber.filter(x => questNumberSet.includes(x));
+            var ball = onlyNumber.length;
+            var strike=0;
+            for(let i=0; i < 4; i++){
+                if (answerNumber[i] === questNumberSet[i]){
+                    strike++
+                }
+            }
+            //ballResult = strike - ball;
+            //strikeResult = ball - strike;
+
+            ballResult = strike <=  ball ? -(strike - ball) : ball;
+            strikeResult = strike;
+            //ball - strike;
+            console.log(ball);
+            console.log(strike);
+            console.log(strike - ball);
+            console.log(ballResult);
+            console.log(strikeResult);
+        }
+        //볼4개면 4/4=0
+        //볼0개면 0/0=0
+        //!!!!!!!!!!!!!!게임 끝나는 시스템을 만들어야한다.
+        //clear 기능도 만들어야 한다.
+
         
         var answerNumber = [];
 
@@ -132,14 +222,28 @@
                 if (isDuplicate === true){
                     alert("중복된 숫자가 존재합니다");
                 } else {
-                    alert("문제없네요");
+                    strikeZone(); 
+                    round(); //유효성 검사 후 결과 내보내기
+                    //!!!!!!!!숫자를 세 개만 입력해도 문제없다고 한다.
+                    box1.value = "";
+                    box2.value = "";
+                    box3.value = "";
+                    box4.value = "";
+
+                    /*
+                    1. 두자리 수
+                    2. 숫자 아닌 것 걸러내야 함
+                    //!!!!!!!!!!!!!!게임 끝나는 시스템을 만들어야한다.
+                    */
                 }
             }
             answerNumber = boxarr;
 
-            console.log(isDuplicate); 
             console.log(setCollection);
             validatie();
+
+            
+
             /*
             1. 유효성 검사
             2. 스트라이크 볼 판정 후 표기
@@ -166,10 +270,70 @@
         1. 스트라이크 판정은 쉽다. 인덱스 값으로 비교하면 된다.
         2. 볼 판정은 스트라이크인 것을 제외하고
         3. 모두가 맞으면 정답이 나오게 해야한다.
-        4. 
-        
+        4. 볼여부 판정부터 한 다음. 스트라이크 판정을 해서 볼 마이너스 스트라이크 하면 순수 볼 갯수가 나온다
+    
+        해당 dom이 ""이면 다음 칸으로 넘기기
         */
+        
+        //a.filter(x => b.includes(x)) 하면 교집합이 나옴
+        //전역변수 사용에는 클로저를 사용해야한다. 나는 편법을 var 전역변수를 사용했다. 리팩토링시 필수 개선 항목!
+
+        function round(){//라운드별로 dom에 그려주는 함수
+            if(val1.innerHTML === '&nbsp;'){
+                    round1.innerHTML = answerNumber;
+                    val1.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val2.innerHTML === '&nbsp;') {
+                    round2.innerHTML = answerNumber;
+                    val2.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val3.innerHTML === '&nbsp;') {
+                    round3.innerHTML = answerNumber;
+                    val3.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val4.innerHTML === '&nbsp;') {
+                    round4.innerHTML = answerNumber;
+                    val4.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val5.innerHTML === '&nbsp;') {
+                    round5.innerHTML = answerNumber;
+                    val5.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val6.innerHTML === '&nbsp;') {
+                    round6.innerHTML = answerNumber;
+                    val6.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val7.innerHTML === '&nbsp;') {
+                    round7.innerHTML = answerNumber;
+                    val7.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val8.innerHTML === '&nbsp;') {
+                    round8.innerHTML = answerNumber;
+                    val8.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else if(val9.innerHTML === '&nbsp;') {
+                    round9.innerHTML = answerNumber;
+                    val9.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
+                }else{
+                    alert("게임 끝");
+                    reStart();
+                }
+        }
+        function reStart(){
+            round1.innerHTML = "&nbsp;";
+            round2.innerHTML = "&nbsp;";
+            round3.innerHTML = "&nbsp;";
+            round4.innerHTML = "&nbsp;";
+            round5.innerHTML = "&nbsp;";
+            round6.innerHTML = "&nbsp;";
+            round7.innerHTML = "&nbsp;";
+            round8.innerHTML = "&nbsp;";
+            round9.innerHTML = "&nbsp;";
+            val1.innerHTML = "&nbsp;";
+            val2.innerHTML = "&nbsp;";
+            val3.innerHTML = "&nbsp;";
+            val4.innerHTML = "&nbsp;";
+            val5.innerHTML = "&nbsp;";
+            val6.innerHTML = "&nbsp;";
+            val7.innerHTML = "&nbsp;";
+            val8.innerHTML = "&nbsp;";
+            val9.innerHTML = "&nbsp;";
+        }
+
 
     </script>
+    
 </body>
 </html>
