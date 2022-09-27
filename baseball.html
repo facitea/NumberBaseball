@@ -133,8 +133,8 @@
             let questNumber = new Array(); //문제 배열
             let zeroToNine = ["0","1","2","3","4","5","6","7","8","9"]; //1~10 배열
             while(questNumber.length < 4){
-            let questNumbernum = zeroToNine.splice(Math.floor(Math.random() * zeroToNine.length),1)[0]
-            questNumber.push(questNumbernum)
+                let questNumbernum = zeroToNine.splice(Math.floor(Math.random() * zeroToNine.length),1)[0]
+                questNumber.push(questNumbernum)
             }
 
             alert(questNumber + "문제 생성 완료");
@@ -148,37 +148,34 @@
         }
         window.onload = questMaker();
 
+        const round1 = document.getElementById("round1");
+        const round2 = document.getElementById("round2");
+        const round3 = document.getElementById("round3");
+        const round4 = document.getElementById("round4");
+        const round5 = document.getElementById("round5");
+        const round6 = document.getElementById("round6");
+        const round7 = document.getElementById("round7");
+        const round8 = document.getElementById("round8");
+        const round9 = document.getElementById("round9");
 
-
-        
-    
-            const round1 = document.getElementById("round1");
-            const round2 = document.getElementById("round2");
-            const round3 = document.getElementById("round3");
-            const round4 = document.getElementById("round4");
-            const round5 = document.getElementById("round5");
-            const round6 = document.getElementById("round6");
-            const round7 = document.getElementById("round7");
-            const round8 = document.getElementById("round8");
-            const round9 = document.getElementById("round9");
-
-            const val1 = document.getElementById("round1_val");
-            const val2 = document.getElementById("round2_val");
-            const val3 = document.getElementById("round3_val");
-            const val4 = document.getElementById("round4_val");
-            const val5 = document.getElementById("round5_val");
-            const val6 = document.getElementById("round6_val");
-            const val7 = document.getElementById("round7_val");        
-            const val8 = document.getElementById("round8_val");        
-            const val9 = document.getElementById("round9_val");   
+        const val1 = document.getElementById("round1_val");
+        const val2 = document.getElementById("round2_val");
+        const val3 = document.getElementById("round3_val");
+        const val4 = document.getElementById("round4_val");
+        const val5 = document.getElementById("round5_val");
+        const val6 = document.getElementById("round6_val");
+        const val7 = document.getElementById("round7_val");        
+        const val8 = document.getElementById("round8_val");        
+        const val9 = document.getElementById("round9_val");   
 
         var ballResult;
         var strikeResult;
 
         function strikeZone(){
-            let onlyNumber = answerNumber.filter(x => questNumberSet.includes(x));
+            let onlyNumber = answerNumber.filter(x => questNumberSet.includes(x)); //두 배열이 같다면 
             var ball = onlyNumber.length;
             var strike=0;
+
             for(let i=0; i < 4; i++){
                 if (answerNumber[i] === questNumberSet[i]){
                     strike++
@@ -187,7 +184,7 @@
             //ballResult = strike - ball;
             //strikeResult = ball - strike;
 
-            ballResult = strike <=  ball ? -(strike - ball) : ball;
+            ballResult = strike <=  ball ? -(strike - ball) : ball; //시행착오 끝에 만들어낸 삼항연산자 로직
             strikeResult = strike;
             //ball - strike;
             console.log(ball);
@@ -224,6 +221,7 @@
                 } else {
                     strikeZone(); 
                     round(); //유효성 검사 후 결과 내보내기
+                    isSameNumber();
                     //!!!!!!!!숫자를 세 개만 입력해도 문제없다고 한다.
                     box1.value = "";
                     box2.value = "";
@@ -234,14 +232,14 @@
                     1. 두자리 수
                     2. 숫자 아닌 것 걸러내야 함
                     //!!!!!!!!!!!!!!게임 끝나는 시스템을 만들어야한다.
+                    //input 값 지우기!!!!!!!!
                     */
                 }
-            }
+            }//리팩토링시 함수를 바깥으로 빼내야 한다. 클로저를 공부하는 계기가 될 것이다.
             answerNumber = boxarr;
 
             console.log(setCollection);
             validatie();
-
             
 
             /*
@@ -260,10 +258,12 @@
         */
 
         function isSameNumber(){
-            if (questNumberSet == answerNumber){
-                alert("정답입니다.")
-            } else {
-                alert("오답입니다.")
+            if(strikeResult === 4){
+                alert("정답입니다.");
+                reStart();
+            }
+            else {
+                alert("오답입니다.");
             }
         }
         /*questNumberSet[i] === answerNumber[i]
