@@ -56,8 +56,8 @@
                 <input type="text" class="inputnumber box" id="box3">
                 <input type="text" class="inputnumber box" id="box4">
                 <!--선택자는 띄어쓰면 두 개 지어줄 수 있다-->
-                <input type="button" class="inputnumber" value="투구" onclick="pitch()">
-                <input type="button" value="재시작" onclick="reStart()">
+                <input type="button" class="inputnumber" value="투구" id="pitchBtn">
+                <input type="button" value="재시작" id="restartBtn">
             </div>
             <div class="gameresult">투구하세요</div>
         </div>
@@ -120,10 +120,20 @@
         </div>
         </wrapper>
         <script>
+            const pitchBtn = document.getElementById('pitchBtn');
+            const restartBtn = document.getElementById('restartBtn');
             const inputnumber = document.querySelectorAll(".inputnumber");
 
+            pitchBtn.addEventListener(
+                'click', () => { pitch() }
+            );
+
+            restartBtn.addEventListener(
+                'click', () =>{ restart() }
+            );
+
             for (let i = 0; i < inputnumber.length - 1; i++) {
-                inputnumber[i].addEventListener("keyup", function () {
+                inputnumber[i].addEventListener("keyup", function() {
                     this.nextElementSibling.focus();
                 })
             } //nextElementSibling 다음 Element를 반환해주는 method이다.
@@ -143,7 +153,7 @@
 
             const questMaker = () => {
                 let questNumber = []; //문제 배열
-                let zeroToNine = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]; //1~10 배열
+                const zeroToNine = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]; //1~10 배열
                 while (questNumber.length < 4) {
                     let questNumberMaker = zeroToNine.splice(Math.floor(Math.random() * zeroToNine.length), 1)[0]
                     questNumber.push(questNumberMaker)
@@ -207,11 +217,11 @@
 
             let answerNumber = [];
 
-            const pitch = () => {
-                let box1 = document.getElementById("box1").value;
-                let box2 = document.getElementById("box2").value;
-                let box3 = document.getElementById("box3").value;
-                let box4 = document.getElementById("box4").value;
+            const pitch = () => {        
+                const box1 = document.getElementById("box1").value;
+                const box2 = document.getElementById("box2").value;
+                const box3 = document.getElementById("box3").value;
+                const box4 = document.getElementById("box4").value;
 
                 let boxarr = [box1, box2, box3, box4];
 
@@ -264,7 +274,7 @@
             const isSameNumber = () => {
                 if (strikeResult === 4) {
                     alert("정답입니다.");
-                    reStart();
+                    restart();
                 }
                 else {
                     alert("오답입니다.");
@@ -316,10 +326,10 @@
                     val9.innerHTML = `${ballResult}볼 ${strikeResult}스트라이크`;
                 } else {
                     alert("게임 끝");
-                    reStart();
+                    restart();
                 }
             }
-            const reStart = () => {
+            const restart = () => {
                 round1.innerHTML = "&nbsp;";
                 round2.innerHTML = "&nbsp;";
                 round3.innerHTML = "&nbsp;";
@@ -343,8 +353,6 @@
                 box2.value = null;
                 box3.value = null;
                 box4.value = null;
-
-                questMaker();
             }
 
 
